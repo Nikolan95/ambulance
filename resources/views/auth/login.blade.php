@@ -59,7 +59,7 @@
                                 </div><!--end form-group-->
                                 <div class="form-group mb-0 row">
                                     <div class="col-12 mt-2">
-                                        <button class="btn btn-gradient-primary btn-round btn-block waves-effect waves-light" type="submit">Einloggen <i class="fas fa-sign-in-alt ml-1"></i></button>
+                                        <button class="btn btn-gradient-primary btn-round btn-block waves-effect waves-light" type="submit">Log in <i class="fas fa-sign-in-alt ml-1"></i></button>
                                     </div><!--end col-->
                                 </div> <!--end form-group-->
                                 </form><!--end form-->    
