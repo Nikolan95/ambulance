@@ -2,37 +2,35 @@
 //create doctor
 $('#createdoctorform').on('submit', function(event) {
 event.preventDefault();
-    let firstname = $('#doctorfirstname1').val();
-    let lastname = $('#doctorlastname1').val();
-    let type = $('#doctortype1').val();
-    let username = $('#doctorusername1').val();
-    let password = $('#doctorpassword1').val();
-    let confirm_password = $('#doctorconfirm_password1').val();
-    let _token = $("input[name=_token]").val();
     $.ajax({
-        url: "/createdoctor",
-        type: 'POST',              
-        data:{
-            firstname:firstname,
-            lastname:lastname,
-            type:type,
-            username:username,
-            password:password,
-            confirm_password:confirm_password,
-            _token:_token
-        },
-        success: function(response)
+        url:$(this).attr('action'),
+        method:$(this).attr('method'),
+        data:new FormData(this),
+        processData:false,
+        dataType:'json',
+        contentType:false,
+        beforeSend:function(){
+            $(document).find('span.error-text').text('');
+        },              
+        success: function(data)
         {
-            $("#datatable tbody").append('<tr><td>'+ response.firstname +'</td><td>'+ response.lastname +'</td><td>'+ response.doc_types_id +'</td><td>'+ response.username +'</td><td class="text-right">'+                                                       
-            '<a href="javascript:void(0)" onclick="editDoctors({{$doctor->id}}) class="mr-2"><i class="fas fa-edit text-info font-16"></i></a>&nbsp;&nbsp;&nbsp;'+
-            '<a href="#"><i class="fas fa-trash-alt text-danger font-16"></i></a>'+
-            '</td></tr>');
-            $('#createdoctor').modal('hide');
-            Swal.fire(
-            'Success!',
-            'Doctor has been added',
-            'success'
-            )
+            if(data.status == 0){
+                $.each(data.error, function(prefix, val){
+                    $('span.'+prefix+'_error').text(val[0]);
+                });
+            }else{
+                console.log(data);
+                $("#datatable tbody").append('<tr><td>'+ data.firstname +'</td><td>'+ data.lastname +'</td><td>'+ data.doc_types_id +'</td><td>'+ data.username +'</td><td class="text-right">'+                                                       
+                '<a href="javascript:void(0)" onclick="editDoctors({{$doctor->id}}) class="mr-2"><i class="fas fa-edit text-info font-16"></i></a>&nbsp;&nbsp;&nbsp;'+
+                '<a href="#"><i class="fas fa-trash-alt text-danger font-16"></i></a>'+
+                '</td></tr>');
+                $('#createdoctor').modal('hide');
+                Swal.fire(
+                'Success!',
+                'Doctor has been added',
+                'success'
+                )
+            }
         }
     })
 });
@@ -123,35 +121,34 @@ $('#deletedoctorform').on('submit', function(event) {
     //create patient
 $('#createpatientform').on('submit', function(event) {
     event.preventDefault();
-    let firstname = $('#patientfirstname1').val();
-    let lastname = $('#patientlastname1').val();
-    let location = $('#patientlocation1').val();
-    let jmbg = $('#patientjmbg1').val();
-    let note = $('#patientnote1').val();
-    let _token = $("input[name=_token]").val();
     $.ajax({
-        url: "/createpatient",
-        type: 'POST',              
-        data:{
-            firstname:firstname,
-            lastname:lastname,
-            location:location,
-            jmbg:jmbg,
-            note:note,
-            _token:_token
-        },
-        success: function(response)
+        url:$(this).attr('action'),
+        method:$(this).attr('method'),
+        data:new FormData(this),
+        processData:false,
+        dataType:'json',
+        contentType:false,
+        beforeSend:function(){
+            $(document).find('span.error-text').text('');
+        },               
+        success: function(data)
         {
-            $("#datatable tbody").append('<tr><td>'+ response.firstname +'</td><td>'+ response.lastname +'</td><td>'+ response.location_id +'</td><td>'+ response.jmbg +'</td><td class="text-right">'+                                                       
-            '<a href="javascript:void(0)" onclick="editPatient({{'+ response.id +'}}) class="mr-2"><i class="fas fa-edit text-info font-16"></i></a>&nbsp;&nbsp;&nbsp;'+
-            '<a href="#"><i class="fas fa-trash-alt text-danger font-16"></i></a>'+
-            '</td></tr>');
-            $('#createpatient').modal('hide');
-            Swal.fire(
-            'Success!',
-            'Patient has been added',
-            'success'
-            )
+            if(data.status == 0){
+                $.each(data.error, function(prefix, val){
+                    $('span.'+prefix+'_error').text(val[0]);
+                });
+            }else{
+                $("#datatable tbody").append('<tr><td>'+ data.firstname +'</td><td>'+ data.lastname +'</td><td>'+ data.location_id +'</td><td>'+ data.jmbg +'</td><td class="text-right">'+                                                       
+                '<a href="javascript:void(0)" onclick="editPatient({{'+ data.id +'}}) class="mr-2"><i class="fas fa-edit text-info font-16"></i></a>&nbsp;&nbsp;&nbsp;'+
+                '<a href="#"><i class="fas fa-trash-alt text-danger font-16"></i></a>'+
+                '</td></tr>');
+                $('#createpatient').modal('hide');
+                Swal.fire(
+                'Success!',
+                'Patient has been added',
+                'success'
+                )
+            }
         }
     })
 });
@@ -294,41 +291,40 @@ $(function(){
 //create diagnosis
 $('#createexaminationform').on('submit', function(event) {
     event.preventDefault();
-    let patient = $('#patient1').val();
-    let doctor = $('#doctor1').val();
-    let diagnosis = $('#diagnosis1').val();
-    let performed_at = $('#performed_at1').val();
-    let _token = $("input[name=_token]").val();
-    console.log(performed_at);
     $.ajax({
-        url: "/createexamination",
-        type: 'POST',              
-        data:{
-            patient:patient,
-            doctor:doctor,
-            diagnosis:diagnosis,
-            performed_at:performed_at,
-            _token:_token
-        },
-        success: function(response)
+        url:$(this).attr('action'),
+        method:$(this).attr('method'),
+        data:new FormData(this),
+        processData:false,
+        dataType:'json',
+        contentType:false,
+        beforeSend:function(){
+            $(document).find('span.error-text').text('');
+        }, 
+        success: function(data)
         {
-            console.log(response);
-            $("#datatable tbody").append('<tr><td>'+ response.patient_id +'</td><td>'+ response.doctor_id +'</td><td> <a class="viewdiagnosis" data-toggle="modal" data-target="#viewdiagnosis" data-id="" data-name="" data-diagnosis="" class="mr-2"><i class="fas fa-file-medical-alt text-info font-24"></i></a> </td><td>'+ response.performed_at +'</td><td class="text-right">'+                                                       
-            '<a href="javascript:void(0)" onclick="editPatient({{'+ response.id +'}}) class="mr-2"><i class="fas fa-edit text-info font-16"></i></a>&nbsp;&nbsp;&nbsp;'+
-            '<a href="#"><i class="fas fa-trash-alt text-danger font-16"></i></a>'+
-            '</td></tr>');
-            $('#createexamination').modal('hide');
-            Swal.fire(
-            'Success!',
-            'Examination has been added',
-            'success'
-            )
+            if(data.status == 0){
+                $.each(data.error, function(prefix, val){
+                    $('span.'+prefix+'_error').text(val[0]);
+                });
+            }else{
+                $("#datatable tbody").append('<tr><td>'+ data.patient_id +'</td><td>'+ data.doctor_id +'</td><td> <a class="viewdiagnosis" data-toggle="modal" data-target="#viewdiagnosis" data-id="" data-name="" data-diagnosis="" class="mr-2"><i class="fas fa-file-medical-alt text-info font-24"></i></a> </td><td>'+ data.performed_at +'</td><td class="text-right">'+                                                       
+                '<a href="javascript:void(0)" onclick="editPatient({{'+ data.id +'}}) class="mr-2"><i class="fas fa-edit text-info font-16"></i></a>&nbsp;&nbsp;&nbsp;'+
+                '<a href="#"><i class="fas fa-trash-alt text-danger font-16"></i></a>'+
+                '</td></tr>');
+                $('#createexamination').modal('hide');
+                Swal.fire(
+                'Success!',
+                'Examination has been added',
+                'success'
+                )
+            }
         }
     })
 });
 //edit diagnosis
 function editExaminations(id){
-    $.get('examinationedit/'+id,function(examination){
+    $.get('/examinationedit/'+id,function(examination){
         $('#examinationid').val(examination.id);
         $('#patient').val(examination.patient_id);
         $('#doctor').val(examination.doctor_id);

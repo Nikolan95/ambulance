@@ -5,7 +5,7 @@
                 <a href="/dashboard"><i data-feather="monitor" class="align-self-center menu-icon icon-dual" href = "/dashboard"></i></a>
             </a><br>
             <a href="#BonusCalculation" class="nav-link" data-toggle="tooltip-custom" data-placement="right" title="" data-original-title="Ambulance" data-trigger="hover">
-                <i data-feather="dollar-sign" class="align-self-center menu-icon icon-dual"></i>
+                <i data-feather="clipboard" class="align-self-center menu-icon icon-dual"></i>
             </a>
         </nav><!--end nav-->
         <div class="pro-metrica-end">

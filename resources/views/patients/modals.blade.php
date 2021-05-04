@@ -16,7 +16,8 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="firstname">First Name</label>
-                                        <input type="text" class="form-control" name="firstname" id="patientfirstname1" required="">
+                                        <input type="text" class="form-control" name="firstname" id="patientfirstname1">
+                                        <span class="text-danger error-text firstname_error"></span>
                                     </div>
                                 </div>
                             </div>
@@ -24,7 +25,8 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="lastname">Last Name</label>
-                                        <input type="text" class="form-control" name="lastname" id="patientlastname1" required="">
+                                        <input type="text" class="form-control" name="lastname" id="patientlastname1">
+                                        <span class="text-danger error-text lastname_error"></span>
                                     </div>
                                 </div>
                             </div>
@@ -37,6 +39,7 @@
                                                 <option value="{{ $location->id }}"> {{ $location->location }} </option>
                                             @endforeach    
                                         <select>
+                                        <span class="text-danger error-text location_error"></span>
                                     </div>
                                 </div>
                             </div>
@@ -44,7 +47,8 @@
                                 <div class="col-md-12">                            
                                     <div class="form-group"> 
                                         <label for="jmbg">jmbg</label>
-                                        <input type="number" class="form-control" name="jmbg" id="patientjmbg1" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="13" required="">
+                                        <input type="number" class="form-control" name="jmbg" id="patientjmbg1" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="13">
+                                        <span class="text-danger error-text jmbg_error"></span>
                                     </div>
                                 </div>
                             </div>
@@ -52,7 +56,8 @@
                                 <div class="col-md-12">                            
                                     <div class="form-group"> 
                                         <label for="note">Note</label>
-                                        <textarea class="form-control" rows="5" name="note" id="patientnote1" required=""></textarea>
+                                        <textarea class="form-control" rows="5" name="note" id="patientnote1"></textarea>
+                                        <span class="text-danger error-text note_error"></span>
                                     </div>
                                 </div>
                             </div>

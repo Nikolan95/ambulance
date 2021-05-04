@@ -17,10 +17,8 @@
                                 <div class="col-md-12">                            
                                     <div class="form-group"> 
                                         <label for="username">Username</label>
-                                        <input type="text" class="form-control" name="username" id="doctorusername1" required="">
-                                        @error('username')
-                                        <div class="color"> {{ $message }} </div>
-                                        @enderror()
+                                        <input type="text" class="form-control" name="username" id="doctorusername1" >
+                                        <span class="text-danger error-text username_error"></span>
                                     </div>
                                 </div>
                             </div> 
@@ -28,10 +26,8 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="firstname">First Name</label>
-                                        <input type="text" class="form-control" name="firstname" id="doctorfirstname1" required="">
-                                        @error('firstname')
-                                        <div class="color"> {{ $message }} </div>
-                                        @enderror()
+                                        <input type="text" class="form-control" name="firstname" id="doctorfirstname1" >
+                                        <span class="text-danger error-text firstname_error"></span>
                                     </div>
                                 </div>
                             </div>
@@ -39,10 +35,8 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="lastname">Last Name</label>
-                                        <input type="text" class="form-control" name="lastname" id="doctorlastname1" required="">
-                                        @error('lastname')
-                                        <div class="color"> {{ $message }} </div>
-                                        @enderror()
+                                        <input type="text" class="form-control" name="lastname" id="doctorlastname1" >
+                                        <span class="text-danger error-text lastname_error"></span>
                                     </div>
                                 </div>
                             </div>
@@ -55,9 +49,7 @@
                                                 <option value="{{ $type->id }}"> {{ $type->type }} </option>
                                             @endforeach    
                                         <select>
-                                        @error('type')
-                                        <div class="color"> {{ $message }} </div>
-                                        @enderror()
+                                        <span class="text-danger error-text type_error"></span>
                                     </div>
                                 </div>
                             </div>
@@ -65,10 +57,8 @@
                                 <div class="col-md-12">                            
                                     <div class="form-group"> 
                                         <label for="password">Password</label>
-                                        <input type="password" class="form-control" name="password" id="doctorpassword1" required="">
-                                        @error('password')
-                                        <div class="color"> {{ $message }} </div>
-                                        @enderror()
+                                        <input type="password" class="form-control" name="password" id="doctorpassword1" >
+                                        <span class="text-danger error-text password_error"></span>
                                     </div>
                                 </div>
                             </div>
@@ -76,10 +66,8 @@
                                 <div class="col-md-12">                            
                                     <div class="form-group"> 
                                         <label for="confirm_password">Confirm password</label>
-                                        <input type="password" class="form-control" name="confirm_password" id="doctorconfirm_password1" required="">
-                                        @error('confirm_password')
-                                        <div class="color"> {{ $message }} </div>
-                                        @enderror()
+                                        <input type="password" class="form-control" name="confirm_password" id="doctorconfirm_password1" >
+                                        <span class="text-danger error-text confirm_password_error"></span>
                                     </div>
                                 </div>
                             </div>
@@ -115,7 +103,8 @@
                                     <div class="form-group"> 
                                         <label for="username">Username</label>
                                         <input type="hidden" id="doctorid" name="id" />  
-                                        <input type="text" class="form-control" name="username" id="doctorusername" required="">
+                                        <input type="text" class="form-control" name="username" id="doctorusername">
+                                        <span class="text-danger error-text username_error"></span>
                                     </div>
                                 </div>
                             </div> 
@@ -123,7 +112,8 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="firstname">First Name</label>
-                                        <input type="text" class="form-control" name="firstname" id="doctorfirstname" required="">
+                                        <input type="text" class="form-control" name="firstname" id="doctorfirstname">
+                                        <span class="text-danger error-text firstname_error"></span>
                                     </div>
                                 </div>
                             </div>
@@ -131,7 +121,8 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="lastname">Last Name</label>
-                                        <input type="text" class="form-control" name="lastname" id="doctorlastname" required="">
+                                        <input type="text" class="form-control" name="lastname" id="doctorlastname">
+                                        <span class="text-danger error-text lastname_error"></span>
                                     </div>
                                 </div>
                             </div>
@@ -144,6 +135,7 @@
                                                 <option value="{{ $type->id }}"> {{ $type->type }} </option>
                                             @endforeach
                                         <select>
+                                        <span class="text-danger error-text type_error"></span>
                                     </div>
                                 </div>
                             </div>

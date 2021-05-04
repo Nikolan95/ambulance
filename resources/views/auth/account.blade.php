@@ -13,8 +13,7 @@
                     <div class="page-title-box">
                         <div class="float-right">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="javascript:void(0);">Metrica</a></li>
-                                <li class="breadcrumb-item"><a href="javascript:void(0);">Doctors</a></li>
+                                <li class="breadcrumb-item"><a href="/dashboard">ambulance</a></li>
                                 <li class="breadcrumb-item active">Dr.Profile</li>
                             </ol>
                         </div>
@@ -46,7 +45,7 @@
                                     <div class="col-lg-4 ml-auto">
                                         <ul class="list-unstyled personal-detail">
                                             <li class=""><i class="dripicons-phone mr-2 text-info font-18"></i> <b> phone </b> : +91 23456 78910</li>
-                                            <li class="mt-2"><i class="dripicons-mail text-info font-18 mt-2 mr-2"></i> <b> Email </b> : mannat.theme@gmail.com</li>
+                                            <li class="mt-2"><i class="dripicons-mail text-info font-18 mt-2 mr-2"></i> <b> Email </b> : {{ $doctor->username }}@gmail.com</li>
                                             <li class="mt-2"><i class="dripicons-location text-info font-18 mt-2 mr-2"></i> <b>Location</b> : USA</li>
                                         </ul>
                                         <div class="button-list btn-social-icon">                                                
@@ -93,8 +92,8 @@
                                                </div>
                                                <div class="col-md-6">
                                                    <div class="met-basic-detail">
-                                                        <h3>Harry McCall</h3>
-                                                        <p class="text-uppercase font-14">MS Orthopaedic Surgeon</p>
+                                                        <h3>{{ $doctor->firstname }} {{ $doctor->lastname }}</h3>
+                                                        <p class="text-uppercase font-14">{{ $doctor->doc_type->type }}</p>
                                                         <p class="text-muted font-14">
                                                              There are many variations of passages of Lorem Ipsum available, 
                                                              but the majority have suffered alteration in some form, by injected humour, 

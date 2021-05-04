@@ -21,9 +21,7 @@
                                                 <option value="{{ $patient->id }}"> {{ $patient->firstname }} {{ $patient->lastname }}</option>
                                             @endforeach    
                                         <select>
-                                        @error('patient')
-                                        <div class="color"> {{ $message }} </div>
-                                        @enderror()
+                                        <span class="text-danger error-text patient_error"></span>
                                     </div>
                                 </div>
                             </div> 
@@ -36,9 +34,7 @@
                                                 <option value="{{ $doctor->id }}"> {{ $doctor->firstname }} {{ $doctor->lastname }}</option>
                                             @endforeach    
                                         <select>
-                                        @error('doctor')
-                                        <div class="color"> {{ $message }} </div>
-                                        @enderror()
+                                        <span class="text-danger error-text doctor_error"></span>
                                     </div>
                                 </div>
                             </div>
@@ -46,10 +42,8 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="diagnosis">Diagnosis</label>
-                                        <textarea class="form-control" rows="5" name="diagnosis" id="diagnosis1" required=""></textarea>
-                                        @error('diagnosis')
-                                        <div class="color"> {{ $message }} </div>
-                                        @enderror()
+                                        <textarea class="form-control" rows="5" name="diagnosis" id="diagnosis1"></textarea>
+                                        <span class="text-danger error-text diagnosis_error"></span>
                                     </div>
                                 </div>
                             </div>
@@ -58,9 +52,7 @@
                                     <div class="form-group">
                                         <label for="performed_at">Performed at</label>
                                         <input type="date" class="form-control" name="performed_at" id="performed_at1" max="">
-                                        @error('performed_at')
-                                        <div class="color"> {{ $message }} </div>
-                                        @enderror()
+                                        <span class="text-danger error-text performed_at_error"></span>
                                     </div>
                                 </div>
                             </div>
@@ -126,7 +118,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="diagnosis">Diagnosis</label>
-                                        <textarea class="form-control" rows="5" name="diagnosis" id="diagnosis" required=""></textarea>
+                                        <textarea class="form-control" rows="5" name="diagnosis" id="diagnosis"></textarea>
                                         @error('diagnosis')
                                         <div class="color"> {{ $message }} </div>
                                         @enderror()

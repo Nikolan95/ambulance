@@ -7,6 +7,8 @@ use DB;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Validator;
+
 class PatientController extends Controller
 {
     /**
@@ -43,17 +45,30 @@ class PatientController extends Controller
      */
     public function store(Request $request)
     {
-        $patient = new Patient;
+        $validator = Validator::make($request->all(),[
+            'firstname' => 'required|min:2|max:100',
+            'lastname' => 'required|min:2|max:100',
+            'location' => 'required',
+            'jmbg' => 'required|min:13|numeric',
+            'note' => 'required|min:6',
+        ]);
 
-        $patient->firstname = $request->firstname;
-        $patient->lastname = $request->lastname;
-        $patient->location_id = $request->location;
-        $patient->jmbg = $request->jmbg;
-        $patient->note = $request->note;
-    
-        $patient->save();
-    
-        return response()->json($patient);
+        if(!$validator->passes()){
+            return response()->json(['status'=>0, 'error'=>$validator->errors()->toArray()]);
+        }else{
+            $values = [
+                'firstname' =>$request->firstname,
+                'lastname' =>$request->lastname,
+                'location_id' =>$request->location,
+                'jmbg' =>$request->jmbg,
+                'note' =>$request->note,
+            ];
+
+            $query = DB::table('patients')->insert($values);
+            if($query){
+                return response()->json($values);
+            }
+        }
     }
 
     /**

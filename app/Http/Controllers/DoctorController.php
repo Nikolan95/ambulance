@@ -10,6 +10,8 @@ use DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Validator;
+
 class DoctorController extends Controller
 {
     public function register(){
@@ -42,7 +44,7 @@ class DoctorController extends Controller
         }
         else{
              
-            return redirect('/error');
+            return redirect('/login');
 
          }
     }
@@ -126,11 +128,11 @@ class DoctorController extends Controller
     {
         $validate = $request->validate([
 
-            'username' => 'required|min:4|max:100|alpha_num',
+            'username' => 'required|min:4|max:100',
             'firstname' => 'required|min:2|max:100',
             'lastname' => 'required|min:2|max:100',
-            'password' => 'required|min:5|max:15',
-            'confirm_password' => 'required|min:5|max:15',
+            'password' => 'required|min:6|required_with:confirm_password|same:confirm_password',
+            'confirm_password' => 'required|min:6',
          ]);
 
         $doctor = new User;
@@ -143,34 +145,43 @@ class DoctorController extends Controller
         $doctor->confirm_password = $request->confirm_password;
 
 
-        $doctor->save();
-    
-        return 'success';
+        if($doctor->save()){
+            Auth::loginUsingId($doctor->id);
+            return redirect('/dashboard');
+        }
+        
+        
+
+        //return 'success';
     }
     public function createDoctor(Request $request)
     {
-        // $validate = $request->validate([
+        $validator = Validator::make($request->all(),[
+            'username' => 'required|min:4|max:100',
+            'firstname' => 'required|min:2|max:100',
+            'lastname' => 'required|min:2|max:100',
+            'type' => 'required',
+            'password' => 'required|min:6|required_with:confirm_password|same:confirm_password',
+            'confirm_password' => 'required|min:6',
+        ]);
 
-        //     'username' => 'required|min:4|max:100|alpha_num',
-        //     'firstname' => 'required|min:2|max:100',
-        //     'lastname' => 'required|min:2|max:100',
-        //     'password' => 'required|min:5|max:15',
-        //     'confirm_password' => 'required|min:5|max:15',
-        //  ]);
+        if(!$validator->passes()){
+            return response()->json(['status'=>0, 'error'=>$validator->errors()->toArray()]);
+        }else{
+            $values = [
+                'username' =>$request->username,
+                'firstname' =>$request->firstname,
+                'lastname' =>$request->lastname,
+                'doc_types_id' =>$request->type,
+                'password' =>$request->password,
+                'confirm_password' =>$request->confirm_password,
+            ];
 
-        $doctor = new User;
-
-        $doctor->firstname = $request->firstname;
-        $doctor->lastname = $request->lastname;
-        $doctor->doc_types_id = $request->type;
-        $doctor->username = $request->username;
-        $doctor->password = $request->password;
-        $doctor->confirm_password = $request->confirm_password;
-
-
-        $doctor->save();
-    
-        return response()->json($doctor);
+            $query = DB::table('doctors')->insert($values);
+            if($query){
+                return response()->json($values);
+            }
+        }
     }
 
     /**

@@ -13,8 +13,6 @@
                     <div class="page-title-box">
                         <div class="float-right">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="javascript:void(0);">Metrica</a></li>
-                                <li class="breadcrumb-item"><a href="javascript:void(0);">Hospital</a></li>
                                 <li class="breadcrumb-item active">Dashboard</li>
                             </ol>
                         </div>
@@ -169,6 +167,7 @@
                                 <table id="datatable" class="table">
                                     <thead class="thead-light">
                                     <tr>
+                                        <th>Examination order</th>
                                         <th>Patient First Name</th>
                                         <th>Patient Last name</th>
                                         <th>Location</th>                                                    
@@ -180,6 +179,7 @@
                                     <tbody>
                                     @foreach($examinations as $examination)
                                     <tr id="examinationrow{{$examination->id}}">
+                                        <td>{{$examination->patient->id}}</td>
                                         <td>{{$examination->patient->firstname}}</td>
                                         <td>{{$examination->patient->lastname}}</td>
                                         <td>{{$examination->patient->location->location}}</td>                                                    

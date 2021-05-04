@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Validator;
+
 class ExaminationController extends Controller
 {
     /**
@@ -59,7 +61,16 @@ class ExaminationController extends Controller
      */
     public function store(Request $request)
     {
-        $examination = new Examination;
+        $validator = Validator::make($request->all(),[
+            'patient' => 'required',
+            'doctor' => 'required',
+            'diagnosis' => 'required|max:200',
+        ]);
+
+        if(!$validator->passes()){
+            return response()->json(['status'=>0, 'error'=>$validator->errors()->toArray()]);
+        }else{
+           $examination = new Examination;
 
         $examination->patient_id = $request->patient;
         $examination->doctor_id = $request->doctor;
@@ -68,6 +79,7 @@ class ExaminationController extends Controller
         $examination->save();
     
         return response()->json($examination);
+        }
     }
 
     /**

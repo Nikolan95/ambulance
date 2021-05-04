@@ -31,16 +31,11 @@
                         <div class="card auth-card shadow-lg">
                             <div class="card-body">
                                 <div class="px-3">
-                                    <div class="auth-logo-box">
-                                    
+                                    <div class="auth-logo-box">          
                                     </div><!--end auth-logo-box-->
-
                                     <form class="form-horizontal auth-form my-4" action="{{ route('doctor.store') }}" method="POST">
                                         @csrf
                                         <div class="form-group">
-                                            @error('username')
-                                                <div class="color"> {{ $message }} </div>
-                                                @enderror()
                                             <label for="username">Username</label>
                                             <div class="input-group mb-3">
                                                 <span class="auth-form-icon">
@@ -48,42 +43,36 @@
                                                 </span>
                                                 <input type="text" class="form-control" name="username" id="username" placeholder="Type username">
                                             </div>
+                                            @error('username')
+                                                <div class="color"><span class="text-danger"> {{ $message }}</span> </div>
+                                            @enderror()
                                         </div><!--end form-group-->
                                         <div class="form-group">
-                                            @error('firstname')
-                                                <div class="color"> {{ $message }} </div>
-                                            @enderror()
-
                                             <label for="firstname">First Name</label>
-
                                             <div class="input-group mb-3">
                                                 <span class="auth-form-icon">
                                                     <i class="dripicons-mail"></i>
                                                 </span>
                                                 <input type="text" class="form-control" name="firstname" id="firstname" placeholder="Type first name">
                                             </div>
+                                            @error('firstname')
+                                                <div class="color"><span class="text-danger"> {{ $message }}</span> </div>
+                                            @enderror()
                                         </div><!--end form-group-->
                                         <div class="form-group">
-                                            @error('lastname')
-                                                <div class="color"> {{ $message }} </div>
-                                            @enderror()
-
                                             <label for="lastname">Last name</label>
-
                                             <div class="input-group mb-3">
                                                 <span class="auth-form-icon">
                                                     <i class="dripicons-mail"></i>
                                                 </span>
                                                 <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Type lastname">
                                             </div>
+                                            @error('lastname')
+                                                <div class="color"> <span class="text-danger"> {{ $message }}</span> </div>
+                                            @enderror()
                                         </div><!--end form-group-->
                                         <div class="form-group">
-                                            @error('type')
-                                                <div class="color"> {{ $message }} </div>
-                                            @enderror()
-
                                             <label for="type">Doctor type</label>
-
                                             <div class="input-group mb-3">
                                                 <span class="auth-form-icon">
                                                     <i class="dripicons-mail"></i>
@@ -94,34 +83,33 @@
                                                     @endforeach    
                                                 <select>
                                             </div>
+                                            @error('type')
+                                                <div class="color"> <span class="text-danger"> {{ $message }}</span> </div>
+                                            @enderror()
                                         </div><!--end form-group-->
-
-                                        <div class="form-group">
-                                                @error('password')
-                                                    <div class="color" > {{ $message }} </div>
-                                                @enderror()
+                                        <div class="form-group"> 
                                             <label for="userpassword">Password</label>
-
                                             <div class="input-group mb-3">
                                                 <span class="auth-form-icon">
                                                     <i class="dripicons-lock"></i>
                                                 </span>
                                                 <input type="password" class="form-control" name="password" id="userpassword" placeholder="Type Password">
                                             </div>
+                                            @error('password')
+                                                <div class="color" > <span class="text-danger"> {{ $message }}</span> </div>
+                                            @enderror()
                                         </div><!--end form-group-->
-
                                         <div class="form-group">
-                                                @error('confirm_password')
-                                                <div class="color"> {{ $message }} </div>
-                                                @enderror()
                                             <label for="conf_password">Confirm password</label>
-
                                             <div class="input-group mb-3">
                                                 <span class="auth-form-icon">
                                                     <i class="dripicons-lock-open"></i>
                                                 </span>
                                                 <input type="password" class="form-control" name="confirm_password" id="conf_password" placeholder="Confirm your password">
                                             </div>
+                                            @error('confirm_password')
+                                                <div class="color"> <span class="text-danger"> {{ $message }}</span> </div>
+                                            @enderror()
                                         </div>
                                         <div class="form-group mb-0 row">
                                             <div class="col-12 mt-2">

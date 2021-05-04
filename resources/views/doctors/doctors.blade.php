@@ -8,8 +8,8 @@
                 <div class="page-title-box">
                     <div class="float-right">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="javascript:void(0);">Ambulance</a></li>
-                            <li class="breadcrumb-item active">Dashboard</li>
+                            <li class="breadcrumb-item"><a href="/dashboard">Ambulance</a></li>
+                            <li class="breadcrumb-item active">Doctors</li>
                         </ol>
                     </div>
                     <h4 class="page-title">Doctors</h4><br>
