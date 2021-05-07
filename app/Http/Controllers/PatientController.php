@@ -49,7 +49,7 @@ class PatientController extends Controller
             'firstname' => 'required|min:2|max:100',
             'lastname' => 'required|min:2|max:100',
             'location' => 'required',
-            'jmbg' => 'required|min:13|numeric',
+            'jmbg' => 'required|digits:13',
             'note' => 'required|min:6',
         ]);
 
@@ -65,8 +65,10 @@ class PatientController extends Controller
             ];
 
             $query = DB::table('patients')->insert($values);
+            $queryId = DB::getPdo()->lastInsertId();
             if($query){
-                return response()->json($values);
+                $variable = Patient::with('location')->where('id', $queryId)->get();
+                return response()->json($variable);
             }
         }
     }
@@ -104,17 +106,33 @@ class PatientController extends Controller
      */
     public function update(Request $request)
     {
-        $patient = Patient::find($request->id);
+        $validator = Validator::make($request->all(),[
+            'firstname' => 'required|min:2|max:100',
+            'lastname' => 'required|min:2|max:100',
+            'location' => 'required',
+            'jmbg' => 'required|digits:13',
+            'note' => 'required|min:6',
+        ]);
 
-        $patient->firstname = $request->firstname;
-        $patient->lastname = $request->lastname;
-        $patient->location_id = $request->location;
-        $patient->jmbg = $request->jmbg;
-        $patient->note = $request->note;
+        if(!$validator->passes()){
+            return response()->json(['status'=>0, 'error'=>$validator->errors()->toArray()]);
+        }else{
 
-        $patient->save();
+            $values = [
+                'id' =>$request->id,
+                'firstname' =>$request->firstname,
+                'lastname' =>$request->lastname,
+                'location_id' =>$request->location,
+                'jmbg' =>$request->jmbg,
+                'note' =>$request->note,
+            ];
 
-        return response()->json($patient);
+            $query = DB::table('patients')->where('id', $request->id)->update($values);
+            if($query){
+                $variable = Patient::with('location')->where('id', $request->id)->get();
+                return response()->json($variable);
+            }
+        }
     }
 
     /**

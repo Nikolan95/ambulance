@@ -93,7 +93,8 @@
                                     <div class="form-group">
                                         <label for="firstname">First Name</label>
                                         <input type="hidden" id="patientid" name="id" />
-                                        <input type="text" class="form-control" name="firstname" id="patientfirstname" required="">
+                                        <input type="text" class="form-control" name="firstname" id="patientfirstname" >
+                                        <span class="text-danger error-text firstname_error"></span>
                                     </div>
                                 </div>
                             </div>
@@ -101,7 +102,8 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="lastname">Last Name</label>
-                                        <input type="text" class="form-control" name="lastname" id="patientlastname" required="">
+                                        <input type="text" class="form-control" name="lastname" id="patientlastname" >
+                                        <span class="text-danger error-text lastname_error"></span>
                                     </div>
                                 </div>
                             </div>
@@ -114,6 +116,7 @@
                                                 <option value="{{ $location->id }}"> {{ $location->location }} </option>
                                             @endforeach    
                                         <select>
+                                        <span class="text-danger error-text location_error"></span>
                                     </div>
                                 </div>
                             </div>
@@ -121,7 +124,8 @@
                                 <div class="col-md-12">                            
                                     <div class="form-group"> 
                                         <label for="jmbg">jmbg</label>
-                                        <input type="number" class="form-control" name="jmbg" id="patientjmbg" required="">
+                                        <input type="number" class="form-control" name="jmbg" id="patientjmbg" >
+                                        <span class="text-danger error-text jmbg_error"></span>
                                     </div>
                                 </div>
                             </div>
@@ -129,7 +133,8 @@
                                 <div class="col-md-12">                            
                                     <div class="form-group"> 
                                         <label for="note">Note</label>
-                                        <textarea class="form-control" rows="5" name="note" id="patientnote" required=""></textarea>
+                                        <textarea class="form-control" rows="5" name="note" id="patientnote" ></textarea>
+                                        <span class="text-danger error-text note_error"></span>
                                     </div>
                                 </div>
                             </div>

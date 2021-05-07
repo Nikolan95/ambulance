@@ -77,8 +77,13 @@ class ExaminationController extends Controller
         $examination->diagnosis = $request->diagnosis;
         $examination->performed_at = $request->performed_at;
         $examination->save();
+
+        $queryId = $examination->id;
+        
+
+        $variable = Examination::with('doctor')->with('patient')->where('id', $queryId)->get();
     
-        return response()->json($examination);
+        return response()->json($variable);
         }
     }
 
@@ -123,7 +128,8 @@ class ExaminationController extends Controller
         $examination->performed_at = $request->performed_at;
         $examination->save();
 
-        return response()->json($examination);
+        $variable = Examination::with('doctor')->with('patient')->where('id', $request->id)->get();
+        return response()->json($variable);
     }
 
     /**

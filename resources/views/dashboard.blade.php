@@ -179,7 +179,7 @@
                                     <tbody>
                                     @foreach($examinations as $examination)
                                     <tr id="examinationrow{{$examination->id}}">
-                                        <td>{{$examination->patient->id}}</td>
+                                        <td>{{$examination->id}}</td>
                                         <td>{{$examination->patient->firstname}}</td>
                                         <td>{{$examination->patient->lastname}}</td>
                                         <td>{{$examination->patient->location->location}}</td>                                                    

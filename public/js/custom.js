@@ -19,10 +19,9 @@ event.preventDefault();
                     $('span.'+prefix+'_error').text(val[0]);
                 });
             }else{
-                console.log(data);
-                $("#datatable tbody").append('<tr><td>'+ data.firstname +'</td><td>'+ data.lastname +'</td><td>'+ data.doc_types_id +'</td><td>'+ data.username +'</td><td class="text-right">'+                                                       
-                '<a href="javascript:void(0)" onclick="editDoctors({{$doctor->id}}) class="mr-2"><i class="fas fa-edit text-info font-16"></i></a>&nbsp;&nbsp;&nbsp;'+
-                '<a href="#"><i class="fas fa-trash-alt text-danger font-16"></i></a>'+
+                $("#datatable tbody").append('<tr id ="row'+data[0].id+'"><td>'+ data[0].firstname +'</td><td>'+ data[0].lastname +'</td><td>'+ data[0].doc_type.type +'</td><td>'+ data[0].username +'</td><td class="text-right">'+                                                       
+                '<a href="javascript:void(0)" onclick="editDoctors('+data[0].id+')" class="mr-2"><i class="fas fa-edit text-info font-16"></i></a>&nbsp;'+
+                '<a class="deletedoctor" data-toggle="modal" data-target="#deletedoctor" data-id="'+data[0].id+'" data-name="'+data[0].username+'"><i class="fas fa-trash-alt text-danger font-16"></i></a>'+
                 '</td></tr>');
                 $('#createdoctor').modal('hide');
                 Swal.fire(
@@ -54,30 +53,43 @@ $('#updatedoctorform').on('submit', function(event) {
     let lastname = $('#doctorlastname').val();
     let type = $('#doctortype').val();
     let username = $('#doctorusername').val();
-    let _token = $("input[name=_token]").val();
+    $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
     $.ajax({
-        url: "/updatedoctor",
-        type: 'PUT',              
+        url:$(this).attr('action'),
+        method:$(this).attr('method'),
         data:{
             id:id,
             firstname:firstname,
             lastname:lastname,
             type:type,
-            username:username,
-            _token:_token
+            username:username
         },
-        success: function(response)
+        beforeSend:function(){
+            $(document).find('span.error-text').text('');
+        },  
+        success: function(data)
         {
-            $('#row'+ response.id + ' td:nth-child(1)').text(response.firstname);
-            $('#row'+ response.id + ' td:nth-child(2)').text(response.lastname);
-            $('#row'+ response.id + ' td:nth-child(3)').text(response.type);
-            $('#row'+ response.id + ' td:nth-child(4)').text(response.username);
-            $('#editdoctor').modal('hide');
-            Swal.fire(
-            'Success!',
-            'Doctor has been updated',
-            'success'
-            )
+            if(data.status == 0){
+                $.each(data.error, function(prefix, val){
+                    $('span.'+prefix+'_error').text(val[0]);
+                });
+            }
+            else{
+                $('#row'+ data[0].id + ' td:nth-child(1)').text(data[0].firstname);
+                $('#row'+ data[0].id + ' td:nth-child(2)').text(data[0].lastname);
+                $('#row'+ data[0].id + ' td:nth-child(3)').text(data[0].doc_type.type);
+                $('#row'+ data[0].id + ' td:nth-child(4)').text(data[0].username);
+                $('#editdoctor').modal('hide');
+                Swal.fire(
+                'Success!',
+                'Doctor has been updated',
+                'success'
+                )
+            }
         }
     })
 });
@@ -138,9 +150,9 @@ $('#createpatientform').on('submit', function(event) {
                     $('span.'+prefix+'_error').text(val[0]);
                 });
             }else{
-                $("#datatable tbody").append('<tr><td>'+ data.firstname +'</td><td>'+ data.lastname +'</td><td>'+ data.location_id +'</td><td>'+ data.jmbg +'</td><td class="text-right">'+                                                       
-                '<a href="javascript:void(0)" onclick="editPatient({{'+ data.id +'}}) class="mr-2"><i class="fas fa-edit text-info font-16"></i></a>&nbsp;&nbsp;&nbsp;'+
-                '<a href="#"><i class="fas fa-trash-alt text-danger font-16"></i></a>'+
+                $("#datatable tbody").append('<tr id="patientrow'+data[0].id+'"><td>'+ data[0].firstname +'</td><td>'+ data[0].lastname +'</td><td>'+ data[0].location.location+'</td><td>'+ data[0].jmbg +'</td><td class="text-right">'+                                                       
+                '<a href="javascript:void(0)" onclick="editPatient('+ data[0].id +')" class="mr-2"><i class="fas fa-edit text-info font-16"></i></a>&nbsp;'+
+                '<a class="deletepatient" data-toggle="modal" data-target="#deletepatient" data-id="'+data[0].id+'" data-name="'+data[0].firstname+'" href="#"><i class="fas fa-trash-alt text-danger font-16"></i></a>'+
                 '</td></tr>');
                 $('#createpatient').modal('hide');
                 Swal.fire(
@@ -167,36 +179,48 @@ function editPatient(id){
 $('#editpatientform').on('submit', function(event) {
     event.preventDefault();
     let id = $('#patientid').val();
+   
     let firstname = $('#patientfirstname').val();
     let lastname = $('#patientlastname').val();
     let location = $('#patientlocation').val();
     let jmbg = $('#patientjmbg').val();
     let note = $('#patientnote').val();
-    let _token = $("input[name=_token]").val();
+    $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
     $.ajax({
-        url: "/updatepatient",
-        type: 'PUT',              
+        url:$(this).attr('action'),
+        method:$(this).attr('method'),             
         data:{
             id:id,
             firstname:firstname,
             lastname:lastname,
             location:location,
             jmbg:jmbg,
-            note:note,
-            _token:_token
-        },
-        success: function(response)
-        {
-            $('#patientrow'+ response.id + ' td:nth-child(1)').text(response.firstname);
-            $('#patientrow'+ response.id + ' td:nth-child(2)').text(response.lastname);
-            $('#patientrow'+ response.id + ' td:nth-child(3)').text(response.location);
-            $('#patientrow'+ response.id + ' td:nth-child(4)').text(response.jmbg);
-            $('#editpatient').modal('hide');
-            Swal.fire(
-            'Success!',
-            'Doctor has been updated',
-            'success'
-            )
+            note:note,       
+        },  
+        beforeSend:function(){
+            $(document).find('span.error-text').text('');
+        },    
+        success: function(data){
+            if(data.status == 0){
+                $.each(data.error, function(prefix, val){
+                    $('span.'+prefix+'_error').text(val[0]);
+                });
+            }else{
+                $('#patientrow'+ data[0].id + ' td:nth-child(1)').text(data[0].firstname);
+                $('#patientrow'+ data[0].id + ' td:nth-child(2)').text(data[0].lastname);
+                $('#patientrow'+ data[0].id + ' td:nth-child(3)').text(data[0].location.location);
+                $('#patientrow'+ data[0].id + ' td:nth-child(4)').text(data[0].jmbg);
+                $('#editpatient').modal('hide');
+                Swal.fire(
+                'Success!',
+                'Doctor has been updated',
+                'success'
+                )
+            }
         }
     })
 });
@@ -210,14 +234,12 @@ $('.deletepatient').on('show.bs.modal', function(event) {
     var modal = $(this)
 
     modal.find('.modal-content #delpatientId').val(delpatientId);
-    modal.find('.modal-body').html('<h1>You are about to delete doctor '+delpatientname+'<br> Are you sure?</h1>');
+    modal.find('.modal-body').html('<h1>You are about to delete patient '+delpatientname+'<br> Are you sure?</h1>');
 })
 $('#deletepatientform').on('submit', function(event) {
     event.preventDefault();
     let id = $('#delpatientId').val();
     let _token = $("input[name=_token]").val();
-    console.log(id);
-    console.log(_token);
     $.ajax({
         url: '/patientdelete/'+id,
         type:'DELETE',
@@ -288,6 +310,7 @@ $(function(){
 });
 
 // ajax crud for examinations
+ 
 //create diagnosis
 $('#createexaminationform').on('submit', function(event) {
     event.preventDefault();
@@ -308,9 +331,23 @@ $('#createexaminationform').on('submit', function(event) {
                     $('span.'+prefix+'_error').text(val[0]);
                 });
             }else{
-                $("#datatable tbody").append('<tr><td>'+ data.patient_id +'</td><td>'+ data.doctor_id +'</td><td> <a class="viewdiagnosis" data-toggle="modal" data-target="#viewdiagnosis" data-id="" data-name="" data-diagnosis="" class="mr-2"><i class="fas fa-file-medical-alt text-info font-24"></i></a> </td><td>'+ data.performed_at +'</td><td class="text-right">'+                                                       
-                '<a href="javascript:void(0)" onclick="editPatient({{'+ data.id +'}}) class="mr-2"><i class="fas fa-edit text-info font-16"></i></a>&nbsp;&nbsp;&nbsp;'+
-                '<a href="#"><i class="fas fa-trash-alt text-danger font-16"></i></a>'+
+                function formatDate(date) {
+                    var d = new Date(date),
+                        month = '' + (d.getMonth() + 1),
+                        day = '' + d.getDate(),
+                        year = d.getFullYear();
+                
+                    if (month.length < 2) 
+                        month = '0' + month;
+                    if (day.length < 2) 
+                        day = '0' + day;
+                
+                    return [day, month, year].join('-');
+                }
+                if(data[0].performed_at == null){data[0].performed_at = 'not performed'}else{data[0].performed_at =  formatDate(data[0].performed_at)}
+                $("#datatable tbody").append('<tr id="examinationrow'+data[0].id+'"><td>'+ data[0].patient.firstname+' '+data[0].patient.lastname +'</td><td>'+ data[0].doctor.firstname+' '+data[0].doctor.lastname +'</td><td> <a class="viewdiagnosis" data-toggle="modal" data-target="#viewdiagnosis" data-id="'+data[0].id+'" data-name="'+data[0].patient.firstname+' '+data[0].patient.lastname+'" data-diagnosis="'+data[0].diagnosis+'" class="mr-2"><i class="fas fa-file-medical-alt text-info font-24"></i></a> </td><td>'+ data[0].performed_at +'</td><td class="text-right">'+                                                       
+                '<a href="javascript:void(0)" onclick="editExaminations('+ data[0].id +')" class="mr-2"><i class="fas fa-edit text-info font-16"></i></a>&nbsp;'+
+                '<a class="deleteexamination" data-toggle="modal" data-target="#deleteexamination" data-id="'+data[0].id+'" data-name="'+data[0].patient.firstname+' '+data[0].patient.lastname+'" href="#"><i class="fas fa-trash-alt text-danger font-16"></i></a>'+
                 '</td></tr>');
                 $('#createexamination').modal('hide');
                 Swal.fire(
@@ -352,12 +389,26 @@ $('#updateexaminationform').on('submit', function(event) {
             performed_at:performed_at,
             _token:_token
         },
-        success: function(response)
+        success: function(data)
         {
-            $('#examinationrow'+response.id + ' td:nth-child(1)').text(response.patient_id);
-            $('#examinationrow'+response.id + ' td:nth-child(2)').text(response.doctor_id);
-            $('#examinationrow'+response.id + ' td:nth-child(3)').html('<a class="viewdiagnosis" data-toggle="modal" data-target="#viewdiagnosis" data-id="" data-name="" data-diagnosis="" class="mr-2"><i class="fas fa-file-medical-alt text-info font-24"></i></a>');
-            $('#examinationrow'+response.id + ' td:nth-child(4)').text(response.performed_at);
+            function formatDate(date) {
+                var d = new Date(date),
+                    month = '' + (d.getMonth() + 1),
+                    day = '' + d.getDate(),
+                    year = d.getFullYear();
+            
+                if (month.length < 2) 
+                    month = '0' + month;
+                if (day.length < 2) 
+                    day = '0' + day;
+            
+                return [day, month, year].join('-');
+            }
+            if(data[0].performed_at == null){data[0].performed_at = 'not performed'}else{data[0].performed_at =  formatDate(data[0].performed_at)}
+            $('#examinationrow'+data[0].id + ' td:nth-child(1)').text(data[0].patient.firstname+' '+data[0].patient.lastname);
+            $('#examinationrow'+data[0].id + ' td:nth-child(2)').text(data[0].doctor.firstname+' '+data[0].doctor.lastname);
+            $('#examinationrow'+data[0].id + ' td:nth-child(3)').html('<a class="viewdiagnosis" data-toggle="modal" data-target="#viewdiagnosis" data-id="'+data[0].id+'" data-name="'+data[0].patient.firstname+' '+data[0].patient.lastname+'" data-diagnosis="'+data[0].diagnosis+'" class="mr-2"><i class="fas fa-file-medical-alt text-info font-24"></i></a>');
+            $('#examinationrow'+data[0].id + ' td:nth-child(4)').text(data[0].performed_at);
             $('#editexamination').modal('hide');
             Swal.fire(
             'Success!',

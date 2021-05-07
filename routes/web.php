@@ -37,6 +37,8 @@ Route::put('/updatedoctor', [ "uses" => 'App\Http\Controllers\DoctorController@u
 
 Route::delete('/doctordelete/{id}', [ "uses" => 'App\Http\Controllers\DoctorController@destroy', "as" => "doctor.delete"]);
 
+Route::get('/doctors/show', [ "uses" => 'App\Http\Controllers\DoctorController@show', "as" => "doctor.show"]);
+
 //Patient routes
 
 Route::get('/patients', 'App\Http\Controllers\PatientController@index');

@@ -38,6 +38,12 @@
                                         </span>
                                         <input type="text" class="form-control" name="username" id="username" placeholder="Enter username">
                                     </div>
+                                    @error('username')
+                                        <div class="color"><span class="text-danger"> {{ $message }}</span> </div>
+                                    @enderror()
+                                    @if($message = Session::get('error'))
+                                        <div class="color"><span class="text-danger"> {{ $message }}</span> </div>
+                                    @endif
                                 </div><!--end form-group-->
                                 <div class="form-group">
                                     <label for="userpassword">Password</label>
@@ -45,6 +51,9 @@
                                         <span class="auth-form-icon"><i class="dripicons-lock"></i></span>
                                         <input type="password" class="form-control" name="password" id="password" placeholder="Enter password">
                                     </div>
+                                    @error('password')
+                                        <div class="color" > <span class="text-danger"> {{ $message }}</span> </div>
+                                    @enderror()
                                 </div><!--end form-group-->
                                 <div class="form-group row mt-4">
                                     <div class="col-sm-6">
